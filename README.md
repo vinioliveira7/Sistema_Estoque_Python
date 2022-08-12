@@ -1,5 +1,5 @@
 # Sistema Estoque Python
-Sistema de estoque feito em Python com banco de dados utilizando o Tkinter
+Sistema de estoque feito em Python com banco de dados Sqlite3 e utilizando o Tkinter como GUI
 
 
 Imagens do projeto:
