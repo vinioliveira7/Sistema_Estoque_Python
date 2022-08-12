@@ -3,6 +3,7 @@ Sistema de estoque feito em Python com banco de dados utilizando o Tkinter
 
 
 Imagens do projeto:
+
 Usuário cadastrado: vitor
 Senha cadastrada: vi223
 
@@ -11,6 +12,7 @@ Senha cadastrada: vi223
 
 
 Tela do menu:
+
 A tela do menu contém o horário, dia da semana e os botões para acesso das telas
 
 ![image](https://user-images.githubusercontent.com/108029211/184245365-5ebf1d90-2928-4cce-ac88-b4be69ccde33.png)
@@ -18,6 +20,7 @@ A tela do menu contém o horário, dia da semana e os botões para acesso das te
 
 
 Tela estoque:
+
 Aqui você consegue adicionar ou alterar os produtos cadastrados no banco de dados 
 
 
@@ -26,6 +29,7 @@ Aqui você consegue adicionar ou alterar os produtos cadastrados no banco de dad
 
 
 Tela de Cadastro de clientes:
+
 Na tela de clientes você pode registrar um serviço junto de seu produto com o valor total do mesmo, na caixa de entrada de "Produto" você consegue selecionar produtos cadastrados no estoque, após o registro da venda, as unidades são descontadas no estoque para melhor controle
 
 ![image](https://user-images.githubusercontent.com/108029211/184245436-0b540a0b-1ca1-4fe8-a561-efeb933b3d48.png)
