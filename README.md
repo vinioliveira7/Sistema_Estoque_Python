@@ -11,11 +11,9 @@ Usuário cadastrado: vitor
 Senha cadastrada: vi223
 
 <div>
-  <a href="https://giphy.com/gifs/HogvU1EJJLSjuxTLD6">
-    <img src="https://giphy.com/embed/HogvU1EJJLSjuxTLD6.gif">
+  <a href="https://giphy.com/channel/Brumacedo">
+    <img src=https://media.giphy.com/media/HogvU1EJJLSjuxTLD6/giphy.gif>
 </div>
- 
-![image](https://user-images.githubusercontent.com/108029211/184245194-28f44776-a83c-483e-b67c-b6da6ac0860b.png)
 
 
 
@@ -32,12 +30,20 @@ A tela do menu contém o horário, dia da semana e os botões para acesso das te
 Aqui você consegue adicionar ou alterar os produtos cadastrados no banco de dados 
 
 
-![image](https://user-images.githubusercontent.com/108029211/184245332-6608c548-4d6b-4165-9f9d-b702096561b8.png)
-
+<div>
+  <a href="https://giphy.com/channel/Brumacedo">
+    <img src=https://media.giphy.com/media/boFPxBi088GzBRniUW/giphy.gif>
+</div>
 
 
 ### Tela de Cadastro de clientes:
 
 Na tela de clientes você pode registrar um serviço junto de seu produto com o valor total do mesmo, na caixa de entrada de "Produto" você consegue selecionar produtos cadastrados no estoque, após o registro da venda as unidades são descontadas no estoque para melhor controle
 
-![image](https://user-images.githubusercontent.com/108029211/184245436-0b540a0b-1ca1-4fe8-a561-efeb933b3d48.png)
+
+<div>
+  <a href="https://giphy.com/channel/Brumacedo">
+    <img src=https://media.giphy.com/media/kUUpWsygQh3IXvi6Xe/giphy.gif>
+</div>
+  
+  
