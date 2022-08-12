@@ -1,5 +1,6 @@
 # Sistema Estoque Python
 ### Sistema de estoque feito em Python com banco de dados Sqlite3 e utilizando o Tkinter como GUI
+
 <div>
   <img height="50cm" src=http://ForTheBadge.com/images/badges/made-with-python.svg>
 
@@ -35,6 +36,3 @@ Aqui você consegue adicionar ou alterar os produtos cadastrados no banco de dad
 Na tela de clientes você pode registrar um serviço junto de seu produto com o valor total do mesmo, na caixa de entrada de "Produto" você consegue selecionar produtos cadastrados no estoque, após o registro da venda as unidades são descontadas no estoque para melhor controle
 
 ![image](https://user-images.githubusercontent.com/108029211/184245436-0b540a0b-1ca1-4fe8-a561-efeb933b3d48.png)
-
-<div>
-  <img height="150cm" src=http://ForTheBadge.com/images/badges/made-with-python.svg>
