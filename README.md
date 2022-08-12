@@ -6,6 +6,9 @@ Imagens do projeto:
 
 ![image](https://user-images.githubusercontent.com/108029211/184245194-28f44776-a83c-483e-b67c-b6da6ac0860b.png)
 
+Usuário cadastrado: vitor
+Senha cadastrada: vi223
+
 Tela do menu:
 
 ![image](https://user-images.githubusercontent.com/108029211/184245365-5ebf1d90-2928-4cce-ac88-b4be69ccde33.png)
