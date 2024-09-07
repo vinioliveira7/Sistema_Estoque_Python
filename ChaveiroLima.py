@@ -55,6 +55,7 @@ senha = tk.StringVar()
 
 style = ttk.Style()
 
+
 def new_window():
     new_window = tk.Tk()
     new_window.geometry("400x400")
@@ -359,7 +360,18 @@ def tela_cliente_func():
 
     lista_cliente.pack(fill=BOTH, expand=TRUE)
 
-    lista_cliente.bind("<ButtonRelease-1>", selecionar_item_cliente)
+    lista_cliente.bind(
+        "<ButtonRelease-1>",
+        lambda eff: selecionar_item_cliente(
+            eff,
+            lista_cliente,
+            data_cliente_ent,
+            cliente_cliente_ent,
+            produto_combobox,
+            quantidade_cliente_ent,
+            valor_cliente_ent,
+        ),
+    )
 
     retorno_id_cliente = cur.fetchone()
     cur.execute("SELECT * FROM clientes ORDER BY id_cliente")
@@ -403,7 +415,14 @@ def tela_cliente_func():
         bg="#FFFB07",
         highlightbackground="#F7FF00",
         activebackground="#FFD100",
-        command=atualizar_cliente,
+        command=lambda: atualizar_cliente(
+            lista_cliente,
+            data_cliente,
+            cliente_cliente,
+            produto_cliente,
+            quantidade_cliente,
+            valor_cliente,
+        ),
     ).place(x=675, y=190)
 
     delete_cadastro_cliente = tk.Button(
@@ -416,7 +435,14 @@ def tela_cliente_func():
         bg="#BE1A07",
         highlightbackground="#BE1A07",
         activebackground="#E57365",
-        command=deletar_cliente,
+        command=lambda: deletar_cliente(
+            lista_cliente,
+            data_cliente_ent,
+            cliente_cliente_ent,
+            produto_combobox,
+            quantidade_cliente_ent,
+            valor_cliente_ent,
+        ),
     ).place(x=675, y=230)
 
     tela_cliente.mainloop()
@@ -441,7 +467,7 @@ def tela_estoque_func():
     id_chave_retorno = cur.execute("SELECT id_chave FROM estoque")
     retorno_ultimo_id = id_chave_retorno.fetchall()[-1]
     print(retorno_ultimo_id[0])
-    
+
     def cadastrar_estoque():
         conn = sqlite3.connect(DEFAULT_DATABASE)
         cur = conn.cursor()
@@ -770,7 +796,13 @@ def tela_estoque_func():
     tela_estoque.mainloop()
 
 
-def clear_entry_cliente():
+def clear_entry_cliente(
+    data_cliente_ent,
+    cliente_cliente_ent,
+    produto_combobox,
+    quantidade_cliente_ent,
+    valor_cliente_ent,
+):
     data_cliente_ent.delete(0, END)
     cliente_cliente_ent.delete(0, END)
     produto_combobox.delete(0, END)
@@ -778,8 +810,22 @@ def clear_entry_cliente():
     valor_cliente_ent.delete(0, END)
 
 
-def selecionar_item_cliente(a):
-    clear_entry_cliente()
+def selecionar_item_cliente(
+    a,
+    lista_cliente,
+    data_cliente_ent,
+    cliente_cliente_ent,
+    produto_combobox,
+    quantidade_cliente_ent,
+    valor_cliente_ent,
+):
+    clear_entry_cliente(
+        data_cliente_ent,
+        cliente_cliente_ent,
+        produto_combobox,
+        quantidade_cliente_ent,
+        valor_cliente_ent,
+    )
 
     focar_item_cliente = lista_cliente.focus()
     item_tree_cliente = lista_cliente.item(focar_item_cliente)
@@ -794,7 +840,14 @@ def selecionar_item_cliente(a):
         print(item_lista_cliente)
 
 
-def atualizar_cliente():
+def atualizar_cliente(
+    lista_cliente,
+    data_cliente,
+    cliente_cliente,
+    produto_cliente,
+    quantidade_cliente,
+    valor_cliente,
+):
     conn = sqlite3.connect(DEFAULT_DATABASE)
     cur = conn.cursor()
 
@@ -836,7 +889,14 @@ def atualizar_cliente():
     conn.commit()
 
 
-def deletar_cliente():
+def deletar_cliente(
+    lista_cliente,
+    data_cliente_ent,
+    cliente_cliente_ent,
+    produto_combobox,
+    quantidade_cliente_ent,
+    valor_cliente_ent,
+):
     conn = sqlite3.connect(DEFAULT_DATABASE)
     cur = conn.cursor()
 
@@ -853,7 +913,13 @@ def deletar_cliente():
 
     for retorno_cliente_delete in values_retorno_focar_item_cliente:
         lista_cliente.delete(retorno_cliente_delete)
-    clear_entry_cliente()
+    clear_entry_cliente(
+        data_cliente_ent,
+        cliente_cliente_ent,
+        produto_combobox,
+        quantidade_cliente_ent,
+        valor_cliente_ent,
+    )
 
 
 # Relógio new_window
