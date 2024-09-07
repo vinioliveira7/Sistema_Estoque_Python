@@ -118,20 +118,25 @@ def new_window():
 
 
 def analisar():
-    select_usuario = cur.execute("SELECT usuario FROM usuarios")
-    for retorno_usuarios in select_usuario:
-        if usuario.get() in retorno_usuarios:
-            pass
-    select_senha = cur.execute("SELECT senha FROM usuarios")
-    for retorno_senha in select_senha:
-        if senha.get() in retorno_senha:
-            window.destroy()
-            new_window()
-        else:
-            messagebox.showwarning(
-                title="Atenção!", message="Usuário ou Senha estão incorretos!"
-            )
-        break
+    select_senha = cur.execute(
+        "SELECT senha FROM usuarios WHERE usuario=?", (usuario.get(),)
+    )
+
+    user_senha = select_senha.fetchone()
+    senha_digitada = senha.get()
+    if user_senha is None:
+        messagebox.showwarning(
+            title="Atenção!", message="Usuário ou Senha estão incorretos!"
+        )
+        return
+
+    if user_senha[0] == senha_digitada:
+        window.destroy()
+        new_window()
+    else:
+        messagebox.showwarning(
+            title="Atenção!", message="Usuário ou Senha estão incorretos!"
+        )
 
 
 def tela_cliente_func():
