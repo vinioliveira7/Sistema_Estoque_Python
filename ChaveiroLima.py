@@ -1,4 +1,4 @@
-from tkinter import *
+import tkinter as tk
 import tkinter.ttk as ttk
 from PIL import Image, ImageTk
 from tkinter import messagebox
@@ -35,7 +35,7 @@ cur.execute("""CREATE TABLE IF NOT EXISTS clientes (
 
 conn.commit()
 
-window = Tk()
+window = tk.Tk()
 window.title("Chaveiro Lima")
 window.geometry("400x400")
 window["bg"] = "#EE8507"
@@ -46,17 +46,17 @@ window.iconphoto(False, icon_window)
 # Fundo
 image = Image.open("window chaveiro.png")
 photo = ImageTk.PhotoImage(image)
-imagem = Label(window, width=400, height=400, text="adicionando", image=photo)
+imagem = tk.Label(window, width=400, height=400, text="adicionando", image=photo)
 imagem.image = photo
 imagem.pack()
 
-usuario = StringVar()
-senha = StringVar()
+usuario = tk.StringVar()
+senha = tk.StringVar()
 
 style = ttk.Style()
 
 def new_window():
-    new_window = Tk()
+    new_window = tk.Tk()
     new_window.geometry("400x400")
     new_window["bg"] = "#EE8507"
     new_window.resizable(0, 0)
@@ -68,18 +68,18 @@ def new_window():
     # Tela 2
     image_nova = Image.open("tela_entretenimento.png")
     photo_nova = ImageTk.PhotoImage(image_nova)
-    imagem_nova = Label(
+    imagem_nova = tk.Label(
         new_window, width=400, height=400, text="adicionando2", image=photo_nova
     )
     imagem_nova.image = photo_nova
     imagem_nova.pack()
 
-    clock_frame = LabelFrame(
+    clock_frame = tk.LabelFrame(
         new_window, width=370, height=200, bg="#EB622C", relief="flat"
     )
     clock_frame.place(x=250, y=280)
 
-    label_clock = Label(
+    label_clock = tk.Label(
         clock_frame, font=("Helvetica", 20), bg="#EB622C", fg="black", relief="flat"
     )
     label_clock.pack()
@@ -87,7 +87,7 @@ def new_window():
 
     # Botões new_window
 
-    estoque = Button(
+    estoque = tk.Button(
         new_window,
         text="Estoque",
         width=11,
@@ -100,7 +100,7 @@ def new_window():
         command=tela_estoque_func,
     ).place(y=20, x=15)
 
-    clientes = Button(
+    clientes = tk.Button(
         new_window,
         text="Clientes",
         width=11,
@@ -135,7 +135,7 @@ def analisar():
 
 def tela_cliente_func():
     conn = sqlite3.connect(DEFAULT_DATABASE)
-    tela_cliente = Toplevel()
+    tela_cliente = tk.Toplevel()
     tela_cliente.geometry("800x600")
     tela_cliente.resizable(0, 0)
     tela_cliente.title("Tela de clientes")
@@ -146,7 +146,7 @@ def tela_cliente_func():
     # Imagem tela cliente
     image_cliente = Image.open("tela_cliente.png")
     photo_cliente = ImageTk.PhotoImage(image_cliente)
-    imagem_cliente = Label(tela_cliente, width=800, height=600, image=photo_cliente)
+    imagem_cliente = tk.Label(tela_cliente, width=800, height=600, image=photo_cliente)
     imagem_cliente.image = photo_cliente
     imagem_cliente.pack()
 
@@ -157,17 +157,17 @@ def tela_cliente_func():
 
     # Entry, Spinboxes tela cliente
 
-    data_cliente = StringVar()
-    cliente_cliente = StringVar()
-    produto_cliente = StringVar()
-    quantidade_cliente = IntVar()
-    valor_cliente = DoubleVar()
+    data_cliente = tk.StringVar()
+    cliente_cliente = tk.StringVar()
+    produto_cliente = tk.StringVar()
+    quantidade_cliente = tk.IntVar()
+    valor_cliente = tk.DoubleVar()
 
     id_cliente_retorno = cur.execute("SELECT id_cliente FROM clientes")
     retorno_ultimo_id_cliente = id_cliente_retorno.fetchall()[-1]
     print(retorno_ultimo_id_cliente[0])
 
-    data_cliente_ent = Entry(
+    data_cliente_ent = tk.Entry(
         imagem_cliente,
         width=9,
         bd=2,
@@ -180,7 +180,7 @@ def tela_cliente_func():
     )
     data_cliente_ent.place(x=35, y=75)
 
-    cliente_cliente_ent = Entry(
+    cliente_cliente_ent = tk.Entry(
         imagem_cliente,
         width=10,
         bd=2,
@@ -210,7 +210,7 @@ def tela_cliente_func():
     )
     produto_combobox.place(x=300, y=75)
 
-    quantidade_cliente_ent = Entry(
+    quantidade_cliente_ent = tk.Entry(
         imagem_cliente,
         width=10,
         bd=2,
@@ -224,7 +224,7 @@ def tela_cliente_func():
     quantidade_cliente_ent.place(x=460, y=75)
     quantidade_cliente_ent.delete(0, END)
 
-    valor_cliente_ent = Entry(
+    valor_cliente_ent = tk.Entry(
         imagem_cliente,
         width=12,
         bd=2,
@@ -238,10 +238,10 @@ def tela_cliente_func():
     valor_cliente_ent.place(x=610, y=75)
     valor_cliente_ent.delete(0, END)
 
-    lista_cliente_frame = Frame(imagem_cliente, width=750, height=400)
+    lista_cliente_frame = tk.Frame(imagem_cliente, width=750, height=400)
     lista_cliente_frame.place(x=50, y=155)
 
-    scroll_y_cliente = Scrollbar(lista_cliente_frame, orient=VERTICAL)
+    scroll_y_cliente = tk.Scrollbar(lista_cliente_frame, orient=VERTICAL)
 
     def cadastrar_cliente():
         conn = sqlite3.connect(DEFAULT_DATABASE)
@@ -380,7 +380,7 @@ def tela_cliente_func():
         )
         conn.commit()
 
-    enviar_cadastro_cliente = Button(
+    enviar_cadastro_cliente = tk.Button(
         imagem_cliente,
         width=6,
         height=1,
@@ -393,7 +393,7 @@ def tela_cliente_func():
         command=cadastrar_cliente,
     ).place(x=675, y=150)
 
-    update_cadastro_cliente = Button(
+    update_cadastro_cliente = tk.Button(
         imagem_cliente,
         width=6,
         height=1,
@@ -406,7 +406,7 @@ def tela_cliente_func():
         command=atualizar_cliente,
     ).place(x=675, y=190)
 
-    delete_cadastro_cliente = Button(
+    delete_cadastro_cliente = tk.Button(
         imagem_cliente,
         width=6,
         height=1,
@@ -424,7 +424,7 @@ def tela_cliente_func():
 
 # Funções da tela entretenimento
 def tela_estoque_func():
-    tela_estoque = Toplevel()
+    tela_estoque = tk.Toplevel()
     tela_estoque.geometry("800x600")
     tela_estoque["bg"] = "#EE8507"
     tela_estoque.title("Estoque")
@@ -433,15 +433,15 @@ def tela_estoque_func():
     tela_estoque.iconphoto(False, icon_window)
 
     # Estoque informações
-    num_chave = IntVar()
-    nom_chave = StringVar()
-    quant_chave = IntVar()
-    val_chave = DoubleVar()
+    num_chave = tk.IntVar()
+    nom_chave = tk.StringVar()
+    quant_chave = tk.IntVar()
+    val_chave = tk.DoubleVar()
 
     id_chave_retorno = cur.execute("SELECT id_chave FROM estoque")
     retorno_ultimo_id = id_chave_retorno.fetchall()[-1]
     print(retorno_ultimo_id[0])
-
+    
     def cadastrar_estoque():
         conn = sqlite3.connect(DEFAULT_DATABASE)
         cur = conn.cursor()
@@ -480,14 +480,14 @@ def tela_estoque_func():
     # Tela estoque
     image_estoque = Image.open("Tela_de_estoque.png")
     photo_estoque = ImageTk.PhotoImage(image_estoque)
-    imagem_estoque = Label(
+    imagem_estoque = tk.Label(
         tela_estoque, width=800, height=600, image=photo_estoque, text="adcionando3"
     )
     imagem_estoque.image = photo_estoque
     imagem_estoque.pack()
 
     # Frames estoque
-    cadastro_frame = LabelFrame(
+    cadastro_frame = tk.LabelFrame(
         imagem_estoque,
         width=250,
         height=390,
@@ -499,7 +499,7 @@ def tela_estoque_func():
     )
     cadastro_frame.place(x=30, y=30)
 
-    estoque_frame = LabelFrame(
+    estoque_frame = tk.LabelFrame(
         imagem_estoque,
         width=530,
         height=560,
@@ -513,25 +513,25 @@ def tela_estoque_func():
     cadastro_frame.pack_propagate(False)
     # Botões estoque
 
-    num_chave_lab = Label(
+    num_chave_lab = tk.Label(
         cadastro_frame, text="Número da chave", bg="#E1834E", font=DEFAULT_FONT
     ).place(x=0, y=40)
-    nom_chave_lab = Label(
+    nom_chave_lab = tk.Label(
         cadastro_frame, text="Nome da chave", bg="#E1834E", font=DEFAULT_FONT
     ).place(x=0, y=80)
-    quant_chave_lab = Label(
+    quant_chave_lab = tk.Label(
         cadastro_frame,
         text="Quantidade",
         bg="#E1834E",
         font=DEFAULT_FONT,
     ).place(x=0, y=120)
-    val_chave_lab = Label(
+    val_chave_lab = tk.Label(
         cadastro_frame, text="Valor", bg="#E1834E", font=DEFAULT_FONT
     ).place(x=0, y=160)
 
     # Cadastro Entry
 
-    num_chave_ent = Entry(
+    num_chave_ent = tk.Entry(
         cadastro_frame,
         width=8,
         bd=4,
@@ -545,7 +545,7 @@ def tela_estoque_func():
     num_chave_ent.place(x=150, y=40)
     num_chave_ent.delete(0, END)
 
-    nom_chave_ent = Entry(
+    nom_chave_ent = tk.Entry(
         cadastro_frame,
         width=8,
         bd=4,
@@ -558,7 +558,7 @@ def tela_estoque_func():
     )
     nom_chave_ent.place(x=150, y=80)
 
-    quant_chave_ent = Entry(
+    quant_chave_ent = tk.Entry(
         cadastro_frame,
         width=8,
         bd=4,
@@ -572,7 +572,7 @@ def tela_estoque_func():
     quant_chave_ent.place(x=150, y=120)
     quant_chave_ent.delete(0, END)
 
-    val_chave_ent = Entry(
+    val_chave_ent = tk.Entry(
         cadastro_frame,
         width=8,
         bd=4,
@@ -676,7 +676,7 @@ def tela_estoque_func():
             lista_estoque.delete(retorno_estoque_delete)
         clear_entry_est()
 
-    enviar_cadastro_est = Button(
+    enviar_cadastro_est = tk.Button(
         cadastro_frame,
         width=10,
         height=1,
@@ -688,7 +688,7 @@ def tela_estoque_func():
         activebackground="#80C270",
         command=estoque_analise,
     ).place(x=120, y=280)
-    update_cadastro_est = Button(
+    update_cadastro_est = tk.Button(
         cadastro_frame,
         width=10,
         height=1,
@@ -701,7 +701,7 @@ def tela_estoque_func():
         command=atualizar_estoque,
     ).place(x=120, y=240)
 
-    scroll_y = Scrollbar(estoque_frame, orient=VERTICAL, bg="#db8e46")
+    scroll_y = tk.Scrollbar(estoque_frame, orient=VERTICAL, bg="#db8e46")
 
     style = ttk.Style(tela_estoque)
     style.configure("Treeview", background="#E1834E", fieldbackground="#E1834E")
@@ -755,7 +755,7 @@ def tela_estoque_func():
         )
         conn.commit()
 
-    delete_cadastro_est = Button(
+    delete_cadastro_est = tk.Button(
         cadastro_frame,
         width=10,
         height=1,
@@ -881,20 +881,17 @@ def clock(label_clock):
         day_translate = "Sexta"
 
     elif day_translate == "Saturday":
-        day_translate == "Sábado"
+        day_translate = "Sábado"
 
     elif day_translate == "Sunday":
-        day_translate == "Domingo"
-
-    else:
-        pass
+        day_translate = "Domingo"
 
     label_clock.config(text=time_clock + "\n" + day_translate)
     label_clock.after(200, clock, label_clock)
 
 
 # Botões
-usuario_entry = Entry(
+usuario_entry = tk.Entry(
     window,
     width=23,
     bd=4,
@@ -908,7 +905,7 @@ usuario_entry.place(x=185, y=55)
 usuario_entry.focus()
 
 
-senha_entry = Entry(
+senha_entry = tk.Entry(
     window,
     bd=3,
     width=23,
@@ -921,7 +918,7 @@ senha_entry = Entry(
 )
 senha_entry.place(x=185, y=116)
 
-enviar = Button(
+enviar = tk.Button(
     window,
     width=7,
     height=1,
@@ -934,7 +931,7 @@ enviar = Button(
     command=analisar,
 ).place(x=306, y=150)
 
-deletar = Button(
+deletar = tk.Button(
     window,
     width=7,
     height=1,
