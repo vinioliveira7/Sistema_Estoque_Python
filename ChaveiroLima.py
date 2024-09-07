@@ -8,9 +8,11 @@ from time import strftime
 from datetime import datetime
 from pytz import timezone
 
-DEFAULT_FONT = ('Arial 12')
+DEFAULT_FONT = 'Arial 12'
+DEFAULT_DATABASE = 'banco_dados.db'
+CHAVEIRO_ICON = 'chaveiro_lima_icon.ico'
 
-conn=sqlite3.connect('banco_dados.db')
+conn=sqlite3.connect(DEFAULT_DATABASE)
 cur=conn.cursor()
 
 cur.execute("""CREATE TABLE IF NOT EXISTS estoque (
@@ -32,15 +34,6 @@ cur.execute("""CREATE TABLE IF NOT EXISTS clientes (
             quantidade INTEGER,
             valor REAL)""")
 
-"""cur.execute("INSERT INTO usuarios VALUES(?,?)", ('elielson', 'eli43'))
-
-cur.execute("INSERT INTO estoque VALUES(?,?,?,?,?)", (1,1040,'3F',8,8))
-cur.execute("INSERT INTO estoque VALUES(?,?,?,?,?)",(2,682,'Pado',30,10))
-cur.execute("INSERT INTO estoque VALUES(?,?,?,?,?)", (3,952,'Soprano',7,10))
-
-cur.execute("INSERT INTO clientes VALUES(?,?,?,?,?,?)", (1,'20/07/2022', 'João', '3F', 0, 0))
-cur.execute("INSERT INTO clientes VALUES(?,?,?,?,?,?)", (2,'21/07/2022', 'Pedro', 'Pado', 0, 0))"""
-
 conn.commit()
 
 window = Tk()
@@ -48,8 +41,8 @@ window.title("Chaveiro Lima")
 window.geometry("400x400")
 window ["bg"] = "#EE8507"
 window.resizable(0,0)
-icon_window=ImageTk.PhotoImage(file="chaveiro_lima_icon.ico")
-window.iconbitmap(default="chaveiro_lima_icon.ico")
+icon_window=ImageTk.PhotoImage(file=CHAVEIRO_ICON)
+window.iconbitmap(default=CHAVEIRO_ICON)
 window.iconphoto(False,icon_window)
 #Fundo
 image = Image.open("window chaveiro.png")
@@ -70,18 +63,18 @@ def new_window():
     new_window.resizable(0,0)
     new_window.title("Tela de controle")
     style=ttk.Style()
-    icon_window=ImageTk.PhotoImage(file="chaveiro_lima_icon.ico")
-    new_window.iconbitmap(default="chaveiro_lima_icon.ico")
+    icon_window=ImageTk.PhotoImage(file=CHAVEIRO_ICON)
+    new_window.iconbitmap(default=CHAVEIRO_ICON)
     new_window.iconphoto(False,icon_window)
 
     def tela_cliente_func():
-        conn=sqlite3.connect('banco_dados.db')
+        conn=sqlite3.connect(DEFAULT_DATABASE)
         tela_cliente=Toplevel(new_window)
         tela_cliente.geometry("800x600")
         tela_cliente.resizable(0,0)
         tela_cliente.title("Tela de clientes")
-        icon_window=ImageTk.PhotoImage(file="chaveiro_lima_icon.ico")
-        tela_cliente.iconbitmap(default="chaveiro_lima_icon.ico")
+        icon_window=ImageTk.PhotoImage(file=CHAVEIRO_ICON)
+        tela_cliente.iconbitmap(default=CHAVEIRO_ICON)
         tela_cliente.iconphoto(False,icon_window)
 
         #Imagem tela cliente
@@ -132,7 +125,7 @@ def new_window():
         scroll_y_cliente=Scrollbar(lista_cliente_frame, orient=VERTICAL)
 
         def cadastrar_cliente():
-            conn=sqlite3.connect('banco_dados.db')
+            conn=sqlite3.connect(DEFAULT_DATABASE)
             cur = conn.cursor()
             retorno_id_cliente=cur.fetchone()
             retorno_ultimo_id_cliente_soma=retorno_ultimo_id_cliente[0]
@@ -217,7 +210,7 @@ def new_window():
                 print(item_lista_cliente)
 
         def atualizar_cliente():
-            conn=sqlite3.connect('banco_dados.db')
+            conn=sqlite3.connect(DEFAULT_DATABASE)
             cur=conn.cursor()
             
             focar_item_cliente=lista_cliente.focus()
@@ -253,7 +246,7 @@ def new_window():
             conn.commit()
 
         def deletar_cliente():
-            conn=sqlite3.connect('banco_dados.db')
+            conn=sqlite3.connect(DEFAULT_DATABASE)
             cur=conn.cursor()
 
             focar_item_cliente=lista_cliente.focus()
@@ -316,8 +309,8 @@ def new_window():
         tela_estoque.geometry("800x600")
         tela_estoque ["bg"] = "#EE8507"
         tela_estoque.title("Estoque")
-        icon_window=ImageTk.PhotoImage(file="chaveiro_lima_icon.ico")
-        tela_estoque.iconbitmap(default="chaveiro_lima_icon.ico")
+        icon_window=ImageTk.PhotoImage(file=CHAVEIRO_ICON)
+        tela_estoque.iconbitmap(default=CHAVEIRO_ICON)
         tela_estoque.iconphoto(False,icon_window)
 
         #Estoque informações
@@ -331,7 +324,7 @@ def new_window():
         print(retorno_ultimo_id[0])
 
         def cadastrar_estoque():
-            conn=sqlite3.connect('banco_dados.db')
+            conn=sqlite3.connect(DEFAULT_DATABASE)
             cur = conn.cursor()
             retorno_id=cur.fetchone()
             retorno_ultimo_id_soma=retorno_ultimo_id[0]
@@ -416,7 +409,7 @@ def new_window():
                 print(item_lista)
         
         def atualizar_estoque():
-            conn=sqlite3.connect('banco_dados.db')
+            conn=sqlite3.connect(DEFAULT_DATABASE)
             cur=conn.cursor()
             
             focar_item=lista_estoque.focus()
@@ -443,7 +436,7 @@ def new_window():
             conn.commit()
 
         def deletar_estoque():
-            conn=sqlite3.connect('banco_dados.db')
+            conn=sqlite3.connect(DEFAULT_DATABASE)
             cur=conn.cursor()
 
             focar_item=lista_estoque.focus()
