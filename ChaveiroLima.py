@@ -322,8 +322,6 @@ def tela_cliente_func():
             ),
         )
 
-        produto_cliente_get = produto_cliente.get()
-
         conn.commit()
         conn.close()
 
