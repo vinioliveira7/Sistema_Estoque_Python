@@ -2,7 +2,7 @@ import tkinter as tk
 import tkinter.ttk as ttk
 from PIL import Image, ImageTk
 from tkinter import messagebox
-from tkinter.constants import *
+import tkinter.constants as tkc
 import sqlite3
 from datetime import datetime
 from pytz import timezone
@@ -223,7 +223,7 @@ def tela_cliente_func():
         justify="center",
     )
     quantidade_cliente_ent.place(x=460, y=75)
-    quantidade_cliente_ent.delete(0, END)
+    quantidade_cliente_ent.delete(0, tkc.END)
 
     valor_cliente_ent = tk.Entry(
         imagem_cliente,
@@ -237,12 +237,12 @@ def tela_cliente_func():
         justify="center",
     )
     valor_cliente_ent.place(x=610, y=75)
-    valor_cliente_ent.delete(0, END)
+    valor_cliente_ent.delete(0, tkc.END)
 
     lista_cliente_frame = tk.Frame(imagem_cliente, width=750, height=400)
     lista_cliente_frame.place(x=50, y=155)
 
-    scroll_y_cliente = tk.Scrollbar(lista_cliente_frame, orient=VERTICAL)
+    scroll_y_cliente = tk.Scrollbar(lista_cliente_frame, orient=tkc.VERTICAL)
 
     def cadastrar_cliente():
         conn = sqlite3.connect(DEFAULT_DATABASE)
@@ -311,7 +311,7 @@ def tela_cliente_func():
         select_cliente = cur.execute("SELECT * FROM clientes")
         lista_cliente.insert(
             "",
-            END,
+            tkc.END,
             values=(
                 retorno_ultimo_id_cliente_soma,
                 data_cliente.get(),
@@ -343,7 +343,7 @@ def tela_cliente_func():
         "valor",
     )
 
-    scroll_y_cliente.pack(side=LEFT, fill=Y)
+    scroll_y_cliente.pack(side=tkc.LEFT, fill=tkc.Y)
 
     lista_cliente.heading("id_cliente", text="Id")
     lista_cliente.heading("data", text="Data")
@@ -352,13 +352,13 @@ def tela_cliente_func():
     lista_cliente.heading("quantidade", text="Quantidade")
     lista_cliente.heading("valor", text="Valor")
 
-    lista_cliente.column("id_cliente", width=100, anchor=CENTER)
-    lista_cliente.column("data", width=100, anchor=CENTER)
+    lista_cliente.column("id_cliente", width=100, anchor=tkc.CENTER)
+    lista_cliente.column("data", width=100, anchor=tkc.CENTER)
     lista_cliente.column("cliente", width=100)
-    lista_cliente.column("quantidade", width=100, anchor=CENTER)
-    lista_cliente.column("valor", width=100, anchor=CENTER)
+    lista_cliente.column("quantidade", width=100, anchor=tkc.CENTER)
+    lista_cliente.column("valor", width=100, anchor=tkc.CENTER)
 
-    lista_cliente.pack(fill=BOTH, expand=TRUE)
+    lista_cliente.pack(fill=tkc.BOTH, expand=tkc.TRUE)
 
     lista_cliente.bind(
         "<ButtonRelease-1>",
@@ -379,7 +379,7 @@ def tela_cliente_func():
     for item_cliente in select_cliente_ins:
         lista_cliente.insert(
             "",
-            END,
+            tkc.END,
             iid=item_cliente[0],
             values=(
                 item_cliente[0],
@@ -534,7 +534,7 @@ def tela_estoque_func():
         justify="center",
     )
     num_chave_ent.place(x=150, y=40)
-    num_chave_ent.delete(0, END)
+    num_chave_ent.delete(0, tkc.END)
 
     nom_chave_ent = tk.Entry(
         cadastro_frame,
@@ -561,7 +561,7 @@ def tela_estoque_func():
         justify="center",
     )
     quant_chave_ent.place(x=150, y=120)
-    quant_chave_ent.delete(0, END)
+    quant_chave_ent.delete(0, tkc.END)
 
     val_chave_ent = tk.Entry(
         cadastro_frame,
@@ -575,7 +575,7 @@ def tela_estoque_func():
         justify="center",
     )
     val_chave_ent.place(x=150, y=160)
-    val_chave_ent.delete(0, END)
+    val_chave_ent.delete(0, tkc.END)
 
     enviar_cadastro_est = tk.Button(
         cadastro_frame,
@@ -611,7 +611,7 @@ def tela_estoque_func():
         ),
     ).place(x=120, y=240)
 
-    scroll_y = tk.Scrollbar(estoque_frame, orient=VERTICAL, bg="#db8e46")
+    scroll_y = tk.Scrollbar(estoque_frame, orient=tkc.VERTICAL, bg="#db8e46")
 
     style = ttk.Style(tela_estoque)
     style.configure("Treeview", background="#E1834E", fieldbackground="#E1834E")
@@ -627,7 +627,7 @@ def tela_estoque_func():
 
     lista_estoque["displaycolumns"] = ("numero", "nome", "quantidade", "valor")
 
-    scroll_y.pack(side=LEFT, fill=Y)
+    scroll_y.pack(side=tkc.LEFT, fill=tkc.Y)
 
     lista_estoque.heading("id", text="Id")
     lista_estoque.heading("numero", text="Número")
@@ -635,13 +635,13 @@ def tela_estoque_func():
     lista_estoque.heading("quantidade", text="Quantidade")
     lista_estoque.heading("valor", text="Valor R$")
 
-    lista_estoque.column("id", minwidth=0, anchor=CENTER)
+    lista_estoque.column("id", minwidth=0, anchor=tkc.CENTER)
     lista_estoque.column("numero", width=100)
-    lista_estoque.column("nome", anchor=W, width=100)
-    lista_estoque.column("quantidade", anchor=CENTER, width=100)
-    lista_estoque.column("valor", anchor=CENTER, width=100)
+    lista_estoque.column("nome", anchor=tkc.W, width=100)
+    lista_estoque.column("quantidade", anchor=tkc.CENTER, width=100)
+    lista_estoque.column("valor", anchor=tkc.CENTER, width=100)
 
-    lista_estoque.pack(fill=BOTH, expand=True)
+    lista_estoque.pack(fill=tkc.BOTH, expand=True)
 
     # Selecionar produtos na lista
     lista_estoque.bind(
@@ -663,7 +663,7 @@ def tela_estoque_func():
     for item_estoque in select_estoque_ins:
         lista_estoque.insert(
             "",
-            END,
+            tkc.END,
             iid=item_estoque[0],
             values=(
                 item_estoque[0],
@@ -699,11 +699,11 @@ def clear_entry_cliente(
     quantidade_cliente_ent,
     valor_cliente_ent,
 ):
-    data_cliente_ent.delete(0, END)
-    cliente_cliente_ent.delete(0, END)
-    produto_combobox.delete(0, END)
-    quantidade_cliente_ent.delete(0, END)
-    valor_cliente_ent.delete(0, END)
+    data_cliente_ent.delete(0, tkc.END)
+    cliente_cliente_ent.delete(0, tkc.END)
+    produto_combobox.delete(0, tkc.END)
+    quantidade_cliente_ent.delete(0, tkc.END)
+    valor_cliente_ent.delete(0, tkc.END)
 
 
 def estoque_analise(
@@ -731,10 +731,10 @@ def estoque_analise(
 
 
 def clear_entry_est(num_chave_ent, nom_chave_ent, quant_chave_ent, val_chave_ent):
-    num_chave_ent.delete(0, END)
-    nom_chave_ent.delete(0, END)
-    quant_chave_ent.delete(0, END)
-    val_chave_ent.delete(0, END)
+    num_chave_ent.delete(0, tkc.END)
+    nom_chave_ent.delete(0, tkc.END)
+    quant_chave_ent.delete(0, tkc.END)
+    val_chave_ent.delete(0, tkc.END)
 
 
 def selecionar_item(
@@ -779,7 +779,7 @@ def cadastrar_estoque(
     select_estoque = cur.execute("SELECT * FROM estoque")
     lista_estoque.insert(
         "",
-        END,
+        tkc.END,
         values=(
             retorno_ultimo_id_soma,
             num_chave.get(),
