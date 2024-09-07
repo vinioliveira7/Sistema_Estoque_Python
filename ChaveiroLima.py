@@ -468,41 +468,6 @@ def tela_estoque_func():
     retorno_ultimo_id = id_chave_retorno.fetchall()[-1]
     print(retorno_ultimo_id[0])
 
-    def cadastrar_estoque():
-        conn = sqlite3.connect(DEFAULT_DATABASE)
-        cur = conn.cursor()
-        retorno_id = cur.fetchone()
-        retorno_ultimo_id_soma = retorno_ultimo_id[0]
-        retorno_ultimo_id_soma += 1
-        print(retorno_ultimo_id_soma)
-
-        (
-            cur.execute(
-                "INSERT INTO estoque VALUES(?,?,?,?,?)",
-                (
-                    retorno_id,
-                    num_chave.get(),
-                    nom_chave.get(),
-                    quant_chave.get(),
-                    val_chave.get(),
-                ),
-            ),
-        )
-        select_estoque = cur.execute("SELECT * FROM estoque")
-        lista_estoque.insert(
-            "",
-            END,
-            values=(
-                retorno_ultimo_id_soma,
-                num_chave.get(),
-                nom_chave.get(),
-                quant_chave.get(),
-                val_chave.get(),
-                val_chave.get(),
-            ),
-        )
-        (conn.commit(),)
-
     # Tela estoque
     image_estoque = Image.open("Tela_de_estoque.png")
     photo_estoque = ImageTk.PhotoImage(image_estoque)
@@ -612,96 +577,6 @@ def tela_estoque_func():
     val_chave_ent.place(x=150, y=160)
     val_chave_ent.delete(0, END)
 
-    def estoque_analise():
-        if (
-            num_chave.get() == None
-            or nom_chave.get() == None
-            or quant_chave.get() == None
-            or val_chave.get() == None
-        ):
-            messagebox.showwarning(
-                title="Atenção!",
-                message="Você precisa preencher todos os campos para o cadastro.",
-            )
-        else:
-            cadastrar_estoque()
-
-    def clear_entry_est():
-        num_chave_ent.delete(0, END)
-        nom_chave_ent.delete(0, END)
-        quant_chave_ent.delete(0, END)
-        val_chave_ent.delete(0, END)
-
-    def selecionar_item(a):
-        clear_entry_est()
-
-        focar_item = lista_estoque.focus()
-        item_tree = lista_estoque.item(focar_item)
-        retorno_lista_item_tree = item_tree["values"]
-        num_chave_ent.insert(0, retorno_lista_item_tree[1])
-        nom_chave_ent.insert(0, retorno_lista_item_tree[2])
-        quant_chave_ent.insert(0, retorno_lista_item_tree[3])
-        val_chave_ent.insert(0, retorno_lista_item_tree[4])
-
-        for item_lista in retorno_lista_item_tree:
-            print(item_lista)
-
-    def atualizar_estoque():
-        conn = sqlite3.connect(DEFAULT_DATABASE)
-        cur = conn.cursor()
-
-        focar_item = lista_estoque.focus()
-        retorno_focar_item = lista_estoque.item(focar_item)
-        values_retorno_focar_item = retorno_focar_item["values"]
-        print(values_retorno_focar_item[0])
-        lista_estoque.item(
-            focar_item,
-            text="",
-            values=(
-                values_retorno_focar_item[0],
-                num_chave.get(),
-                nom_chave.get(),
-                quant_chave.get(),
-                val_chave.get(),
-            ),
-        )
-
-        cur.execute(
-            """UPDATE estoque SET
-                    num_chave=:num_chave_up,
-                    nom_chave=:nom_chave_up,
-                    quant_chave=:quant_chave_up,
-                    val_chave=:val_chave_up
-                    WHERE id_chave= :id_chave_up""",
-            {
-                "num_chave_up": num_chave.get(),
-                "nom_chave_up": nom_chave.get(),
-                "quant_chave_up": quant_chave.get(),
-                "val_chave_up": val_chave.get(),
-                "id_chave_up": values_retorno_focar_item[0],
-            },
-        )
-
-        conn.commit()
-
-    def deletar_estoque():
-        conn = sqlite3.connect(DEFAULT_DATABASE)
-        cur = conn.cursor()
-
-        focar_item = lista_estoque.focus()
-        retorno_focar_item = lista_estoque.item(focar_item)
-        values_retorno_focar_item = retorno_focar_item["values"]
-        retorno_id = values_retorno_focar_item[0]
-        print(values_retorno_focar_item)
-        print(retorno_id)
-        cur.execute("DELETE FROM estoque WHERE id_chave=?", (retorno_id,))
-
-        conn.commit()
-
-        for retorno_estoque_delete in values_retorno_focar_item:
-            lista_estoque.delete(retorno_estoque_delete)
-        clear_entry_est()
-
     enviar_cadastro_est = tk.Button(
         cadastro_frame,
         width=10,
@@ -712,7 +587,14 @@ def tela_estoque_func():
         bg="#2DB00D",
         highlightbackground="#32FF00",
         activebackground="#80C270",
-        command=estoque_analise,
+        command=lambda: estoque_analise(
+            lista_estoque,
+            retorno_ultimo_id,
+            num_chave,
+            nom_chave,
+            quant_chave,
+            val_chave,
+        ),
     ).place(x=120, y=280)
     update_cadastro_est = tk.Button(
         cadastro_frame,
@@ -724,7 +606,9 @@ def tela_estoque_func():
         bg="#FFFB07",
         highlightbackground="#F7FF00",
         activebackground="#FFD100",
-        command=atualizar_estoque,
+        command=lambda: atualizar_estoque(
+            lista_estoque, num_chave, nom_chave, quant_chave, val_chave
+        ),
     ).place(x=120, y=240)
 
     scroll_y = tk.Scrollbar(estoque_frame, orient=VERTICAL, bg="#db8e46")
@@ -760,7 +644,17 @@ def tela_estoque_func():
     lista_estoque.pack(fill=BOTH, expand=True)
 
     # Selecionar produtos na lista
-    lista_estoque.bind("<ButtonRelease-1>", selecionar_item)
+    lista_estoque.bind(
+        "<ButtonRelease-1>",
+        lambda eff: selecionar_item(
+            eff,
+            lista_estoque,
+            num_chave_ent,
+            nom_chave_ent,
+            quant_chave_ent,
+            val_chave_ent,
+        ),
+    )
     print_db = cur.execute("SELECT * FROM estoque")
     # Insert no Treeview
     retorno_id = cur.fetchone()
@@ -791,7 +685,9 @@ def tela_estoque_func():
         bg="#BE1A07",
         highlightbackground="#BE1A07",
         activebackground="#E57365",
-        command=deletar_estoque,
+        command=lambda: deletar_estoque(
+            lista_estoque, num_chave_ent, nom_chave_ent, quant_chave_ent, val_chave_ent
+        ),
     ).place(x=120, y=320)
     tela_estoque.mainloop()
 
@@ -808,6 +704,152 @@ def clear_entry_cliente(
     produto_combobox.delete(0, END)
     quantidade_cliente_ent.delete(0, END)
     valor_cliente_ent.delete(0, END)
+
+
+def estoque_analise(
+    lista_estoque, retorno_ultimo_id, num_chave, nom_chave, quant_chave, val_chave
+):
+    if (
+        num_chave.get() == None
+        or nom_chave.get() == None
+        or quant_chave.get() == None
+        or val_chave.get() == None
+    ):
+        messagebox.showwarning(
+            title="Atenção!",
+            message="Você precisa preencher todos os campos para o cadastro.",
+        )
+    else:
+        cadastrar_estoque(
+            lista_estoque,
+            retorno_ultimo_id,
+            num_chave,
+            nom_chave,
+            quant_chave,
+            val_chave,
+        )
+
+
+def clear_entry_est(num_chave_ent, nom_chave_ent, quant_chave_ent, val_chave_ent):
+    num_chave_ent.delete(0, END)
+    nom_chave_ent.delete(0, END)
+    quant_chave_ent.delete(0, END)
+    val_chave_ent.delete(0, END)
+
+
+def selecionar_item(
+    a, lista_estoque, num_chave_ent, nom_chave_ent, quant_chave_ent, val_chave_ent
+):
+    clear_entry_est(num_chave_ent, nom_chave_ent, quant_chave_ent, val_chave_ent)
+
+    focar_item = lista_estoque.focus()
+    item_tree = lista_estoque.item(focar_item)
+    retorno_lista_item_tree = item_tree["values"]
+    num_chave_ent.insert(0, retorno_lista_item_tree[1])
+    nom_chave_ent.insert(0, retorno_lista_item_tree[2])
+    quant_chave_ent.insert(0, retorno_lista_item_tree[3])
+    val_chave_ent.insert(0, retorno_lista_item_tree[4])
+
+    for item_lista in retorno_lista_item_tree:
+        print(item_lista)
+
+
+def cadastrar_estoque(
+    lista_estoque, retorno_ultimo_id, num_chave, nom_chave, quant_chave, val_chave
+):
+    conn = sqlite3.connect(DEFAULT_DATABASE)
+    cur = conn.cursor()
+    retorno_id = cur.fetchone()
+    retorno_ultimo_id_soma = retorno_ultimo_id[0]
+    retorno_ultimo_id_soma += 1
+    print(retorno_ultimo_id_soma)
+
+    (
+        cur.execute(
+            "INSERT INTO estoque VALUES(?,?,?,?,?)",
+            (
+                retorno_id,
+                num_chave.get(),
+                nom_chave.get(),
+                quant_chave.get(),
+                val_chave.get(),
+            ),
+        ),
+    )
+    select_estoque = cur.execute("SELECT * FROM estoque")
+    lista_estoque.insert(
+        "",
+        END,
+        values=(
+            retorno_ultimo_id_soma,
+            num_chave.get(),
+            nom_chave.get(),
+            quant_chave.get(),
+            val_chave.get(),
+            val_chave.get(),
+        ),
+    )
+    (conn.commit(),)
+
+
+def atualizar_estoque(lista_estoque, num_chave, nom_chave, quant_chave, val_chave):
+    conn = sqlite3.connect(DEFAULT_DATABASE)
+    cur = conn.cursor()
+
+    focar_item = lista_estoque.focus()
+    retorno_focar_item = lista_estoque.item(focar_item)
+    values_retorno_focar_item = retorno_focar_item["values"]
+    print(values_retorno_focar_item[0])
+    lista_estoque.item(
+        focar_item,
+        text="",
+        values=(
+            values_retorno_focar_item[0],
+            num_chave.get(),
+            nom_chave.get(),
+            quant_chave.get(),
+            val_chave.get(),
+        ),
+    )
+
+    cur.execute(
+        """UPDATE estoque SET
+                num_chave=:num_chave_up,
+                nom_chave=:nom_chave_up,
+                quant_chave=:quant_chave_up,
+                val_chave=:val_chave_up
+                WHERE id_chave= :id_chave_up""",
+        {
+            "num_chave_up": num_chave.get(),
+            "nom_chave_up": nom_chave.get(),
+            "quant_chave_up": quant_chave.get(),
+            "val_chave_up": val_chave.get(),
+            "id_chave_up": values_retorno_focar_item[0],
+        },
+    )
+
+    conn.commit()
+
+
+def deletar_estoque(
+    lista_estoque, num_chave_ent, nom_chave_ent, quant_chave_ent, val_chave_ent
+):
+    conn = sqlite3.connect(DEFAULT_DATABASE)
+    cur = conn.cursor()
+
+    focar_item = lista_estoque.focus()
+    retorno_focar_item = lista_estoque.item(focar_item)
+    values_retorno_focar_item = retorno_focar_item["values"]
+    retorno_id = values_retorno_focar_item[0]
+    print(values_retorno_focar_item)
+    print(retorno_id)
+    cur.execute("DELETE FROM estoque WHERE id_chave=?", (retorno_id,))
+
+    conn.commit()
+
+    for retorno_estoque_delete in values_retorno_focar_item:
+        lista_estoque.delete(retorno_estoque_delete)
+    clear_entry_est(num_chave_ent, nom_chave_ent, quant_chave_ent, val_chave_ent)
 
 
 def selecionar_item_cliente(
