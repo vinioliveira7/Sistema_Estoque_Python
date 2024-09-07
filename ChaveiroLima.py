@@ -8,6 +8,8 @@ from time import strftime
 from datetime import datetime
 from pytz import timezone
 
+DEFAULT_FONT = ('Arial 12')
+
 conn=sqlite3.connect('banco_dados.db')
 cur=conn.cursor()
 
@@ -366,10 +368,10 @@ def new_window():
         cadastro_frame.pack_propagate(False)
         #Botões estoque
         
-        num_chave_lab=Label(cadastro_frame,text="Número da chave",bg="#E1834E", font='Arial 12').place(x=0,y=40) 
-        nom_chave_lab=Label(cadastro_frame,text="Nome da chave",bg="#E1834E", font='Arial 12').place(x=0,y=80)
-        quant_chave_lab=Label(cadastro_frame,text="Quantidade",bg="#E1834E", font='Arial 12',).place(x=0,y=120)
-        val_chave_lab=Label(cadastro_frame,text="Valor",bg="#E1834E", font='Arial 12').place(x=0,y=160)
+        num_chave_lab=Label(cadastro_frame,text="Número da chave",bg="#E1834E", font=DEFAULT_FONT).place(x=0,y=40) 
+        nom_chave_lab=Label(cadastro_frame,text="Nome da chave",bg="#E1834E", font=DEFAULT_FONT).place(x=0,y=80)
+        quant_chave_lab=Label(cadastro_frame,text="Quantidade",bg="#E1834E", font=DEFAULT_FONT,).place(x=0,y=120)
+        val_chave_lab=Label(cadastro_frame,text="Valor",bg="#E1834E", font=DEFAULT_FONT).place(x=0,y=160)
 
         #Cadastro Entry
         
