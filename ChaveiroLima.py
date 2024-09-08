@@ -377,7 +377,6 @@ def tela_cliente_func():
         ),
     )
 
-    retorno_id_cliente = cur.fetchone()
     cur.execute("SELECT * FROM clientes ORDER BY id_cliente")
     select_cliente_ins = cur.fetchall()
     for item_cliente in select_cliente_ins:
@@ -659,7 +658,6 @@ def tela_estoque_func():
             val_chave_ent,
         ),
     )
-    print_db = cur.execute("SELECT * FROM estoque")
     # Insert no Treeview
     retorno_id = cur.fetchone()
     cur.execute("SELECT * FROM estoque ORDER BY id_chave")
@@ -780,7 +778,6 @@ def cadastrar_estoque(
             ),
         ),
     )
-    select_estoque = cur.execute("SELECT * FROM estoque")
     lista_estoque.insert(
         "",
         tkc.END,
