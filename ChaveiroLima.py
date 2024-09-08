@@ -10,6 +10,7 @@ from pytz import timezone
 DEFAULT_FONT = "Arial 12"
 DEFAULT_DATABASE = "banco_dados.db"
 CHAVEIRO_ICON = "chaveiro_lima_icon.ico"
+WARNING_MESSAGE = "Atenção!"
 
 conn = sqlite3.connect(DEFAULT_DATABASE)
 cur = conn.cursor()
@@ -126,7 +127,7 @@ def analisar():
     senha_digitada = senha.get()
     if user_senha is None:
         messagebox.showwarning(
-            title="Atenção!", message="Usuário ou Senha estão incorretos!"
+            title=WARNING_MESSAGE, message="Usuário ou Senha estão incorretos!"
         )
         return
 
@@ -135,7 +136,7 @@ def analisar():
         new_window()
     else:
         messagebox.showwarning(
-            title="Atenção!", message="Usuário ou Senha estão incorretos!"
+            title=WARNING_MESSAGE, message="Usuário ou Senha estão incorretos!"
         )
 
 
@@ -326,8 +327,6 @@ def tela_cliente_func():
                 valor_cliente.get(),
             ),
         )
-
-        produto_cliente_get = produto_cliente.get()
 
         conn.commit()
         conn.close()
@@ -719,7 +718,7 @@ def estoque_analise(
         or val_chave.get() == None
     ):
         messagebox.showwarning(
-            title="Atenção!",
+            title=WARNING_MESSAGE,
             message="Você precisa preencher todos os campos para o cadastro.",
         )
     else:
