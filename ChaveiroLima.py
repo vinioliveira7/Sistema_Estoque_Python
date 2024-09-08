@@ -659,7 +659,7 @@ def tela_estoque_func():
         ),
     )
     # Insert no Treeview
-    retorno_id = cur.fetchone()
+
     cur.execute("SELECT * FROM estoque ORDER BY id_chave")
     select_estoque_ins = cur.fetchall()
     for item_estoque in select_estoque_ins:
